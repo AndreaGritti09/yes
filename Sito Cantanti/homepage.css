@@ -1,0 +1,132 @@
+h1 {
+    color: rgb(49, 39, 39);
+    text-align: center;
+  font-size: 2.5rem; 
+  font-weight: 500;
+    
+}
+h3 {
+      font-style: italic;
+      font-weight: 400;
+      font-size: large;
+      font-family: 'Times New Roman', Times, serif;
+      text-align: center;
+}
+h2 {
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 300;
+}
+p {
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 300;
+}
+
+body{
+    background-color: rgb(0, 0, 0);
+    background: linear-gradient(to right, #cad7e0 100%)
+
+  
+}
+ /* --- Il contenitore principale delle due sezioni --- */
+.container {
+    display: flex; /* La base di tutto: attiva Flexbox! */
+    width: 90%;
+    max-width: 1400px;
+    height: 75vh; /* Altezza pari al 75% della finestra del browser */
+    margin: 30px auto;
+    border-radius: 15px; /* Angoli arrotondati */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Nasconde ciò che esce dai bordi arrotondati */
+}
+
+/* --- Stile condiviso da entrambe le sezioni degli artisti --- */
+.artist-section {
+    /* Dimensionamento Flessibile */
+    flex-grow: 1; /* All'inizio, entrambe le sezioni occupano metà spazio (1+1) */
+    
+    /* Gestione Immagine di Sfondo */
+    background-size: cover; /* L'immagine copre tutta l'area senza deformarsi */
+    background-position: center; /* Mantiene l'immagine centrata durante l'animazione */
+    background-repeat: no-repeat;
+    
+    /* Posizionamento del Contenuto (il testo) */
+    position: relative; /* Necessario per l'overlay e il testo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* L'Animazione Fluida */
+    transition: flex-grow 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transizione morbida */
+}
+
+/* --- Stili specifici per ogni artista --- */
+.juice-wrld {
+    background-image: url(juiceWRLD.png);
+}
+
+.vasco-rossi {
+    background-image: url(vascorossi.png);
+}
+
+/* --- Overlay per migliorare la leggibilità del testo --- */
+.artist-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Sfondo nero semitrasparente */
+    transition: background 0.6s ease; /* Transizione anche per l'overlay */
+}
+
+/* --- Contenuto testuale sopra l'overlay --- */
+.artist-section .content {
+    position: relative; /* Mette il testo sopra l'overlay */
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    transition: transform 0.6s ease; /* Aggiunge un'animazione al testo */
+}
+
+
+/* ######### LA LOGICA DELL'HOVER ######### */
+
+/* Quando il mouse punta su Juice WRLD */
+.juice-wrld:hover {
+    flex-grow: 3; /* Si espande per occupare 3/4 dello spazio (3+1=4) */
+}
+.juice-wrld:hover + .vasco-rossi {
+    flex-grow: 1; /* Il suo vicino si restringe a 1/4 */
+}
+
+/* Quando il mouse punta su Vasco Rossi */
+.vasco-rossi:hover {
+    flex-grow: 3; /* Si espande per occupare 3/4 */
+}
+.juice-wrld:hover {
+    /* Questa regola serve per l'inverso, ma la logica precedente è più pulita.
+       Usiamo invece il selettore di fratelli generali per un approccio più robusto. */
+}
+/* Un approccio alternativo e pulito: */
+.container:hover .juice-wrld:hover ~ .vasco-rossi,
+.container:hover .vasco-rossi:hover ~ .juice-wrld {
+    flex-grow: 1;
+}
+.container:hover .juice-wrld:hover,
+.container:hover .vasco-rossi:hover {
+    flex-grow: 3;
+}
+
+
+/* Effetti bonus al passaggio del mouse */
+.artist-section:hover::before {
+    background: rgba(0, 0, 0, 0.2); /* L'overlay si schiarisce, mostrando di più l'immagine */
+}
+
+.artist-section:hover .content {
+    transform: scale(1.1); /* Il testo si ingrandisce leggermente */
+}
